@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import com.bignerdranch.android.geoquiz.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 private const val TAG = "MainActivity"
 
@@ -101,12 +102,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
-        val messageResId = when {
-            quizViewModel.isCheater -> R.string.judgment_toast
-            userAnswer == correctAnswer -> R.string.correct_toast
-            else -> R.string.incorrect_toast
+        when {
+            quizViewModel.isCheater -> Snackbar.make(binding.cheatButton, R.string.judgment_toast, Toast.LENGTH_SHORT).show()
+            userAnswer == correctAnswer -> Snackbar.make(binding.trueButton, R.string.correct_toast, Toast.LENGTH_SHORT).show()
+            else -> Snackbar.make(binding.falseButton, R.string.incorrect_toast, Toast.LENGTH_SHORT).show()
         }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
