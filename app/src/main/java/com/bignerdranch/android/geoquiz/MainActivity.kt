@@ -45,14 +45,17 @@ class MainActivity : AppCompatActivity() {
         // this is a listener. event listener
         binding.trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
+            changeButtonState("disable")
         }
 
         binding.falseButton.setOnClickListener { view: View ->
             checkAnswer(false)
+            changeButtonState("disable")
         }
 
         binding.nextButton.setOnClickListener {
             quizViewModel.moveToNext()
+            changeButtonState("enable")
             updateQuestion()
         }
 
@@ -113,6 +116,17 @@ class MainActivity : AppCompatActivity() {
             quizViewModel.isCheater -> Snackbar.make(binding.cheatButton, R.string.judgment_toast, Toast.LENGTH_SHORT).show()
             userAnswer == correctAnswer -> Snackbar.make(binding.trueButton, R.string.correct_toast, Toast.LENGTH_SHORT).show()
             else -> Snackbar.make(binding.falseButton, R.string.incorrect_toast, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun changeButtonState(state: String) {
+        if (state == "enable") {
+            binding.trueButton.isEnabled = true
+            binding.falseButton.isEnabled = true
+
+        } else if (state == "disable") {
+            binding.trueButton.isEnabled = false
+            binding.falseButton.isEnabled = false
         }
     }
 
