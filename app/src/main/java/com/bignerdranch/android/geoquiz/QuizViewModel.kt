@@ -31,7 +31,7 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle): ViewModel()
         get() = savedStateHandle.get(IS_ANSWER_TRUE_KEY) ?: R.string.answer
         set(value) = savedStateHandle.set(IS_ANSWER_TRUE_KEY, value)
 
-    private var currentIndex: Int
+    var currentIndex: Int
         get() = savedStateHandle.get(CURRENT_INDEX_KEY) ?: 0
         set(value) = savedStateHandle.set(CURRENT_INDEX_KEY, value)
 
@@ -43,5 +43,11 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle): ViewModel()
 
     fun moveToNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
+    }
+
+    fun moveToPrevious() {
+        if (currentIndex != 0) {
+            currentIndex = (currentIndex - 1) % questionBank.size
+        }
     }
 }

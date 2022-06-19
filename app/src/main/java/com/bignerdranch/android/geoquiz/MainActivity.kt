@@ -63,6 +63,13 @@ class MainActivity : AppCompatActivity() {
             cheatLauncher.launch(intent)
         }
 
+        binding.prevButton.setOnClickListener {
+            if (quizViewModel.currentIndex != 0) {
+                quizViewModel.moveToPrevious()
+                updateQuestion()
+            }
+        }
+
         updateQuestion()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
